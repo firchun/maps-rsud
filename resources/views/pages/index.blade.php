@@ -119,16 +119,18 @@
 
                 var imageHtml = '';
 
-                // tampilkan gambar hanya jika ada path file setelah /storage/
-                if (
-                    facility.photo_url &&
-                    facility.photo_url !== '' &&
-                    facility.photo_url !== '/storage/' &&
-                    facility.photo_url.split('/').pop() !== ''
-                ) {
-                    imageHtml =
-                        '<img src="' + facility.photo_url + '" alt="' + facility.nama +
-                        '" style="max-width:300px;height:auto;" onerror="this.remove();"><br><br>';
+                if (facility.photo_url) {
+                    // ambil nama file paling akhir
+                    var filename = facility.photo_url.split('/').pop().toLowerCase();
+
+                    // cek apakah benar-benar file gambar
+                    var isImage = filename.match(/\.(jpg|jpeg|png|gif|webp)$/);
+
+                    if (isImage) {
+                        imageHtml =
+                            '<img src="' + facility.photo_url + '" alt="' + facility.nama +
+                            '" style="max-width:300px;height:auto;"><br><br>';
+                    }
                 }
 
                 var popupContent =
