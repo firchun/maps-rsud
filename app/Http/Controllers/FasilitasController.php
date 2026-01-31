@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fasilitas;
-use App\Models\Tiket;
-use App\Models\TiketItems;
+use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
@@ -17,12 +16,13 @@ class FasilitasController extends Controller
     {
         $data = [
             'title' => 'Data Fasilitas',
+            'kategori' => Kategori::select(['id', 'kategori'])->get(),
         ];
         return view('admin.fasilitas.index', $data);
     }
     public function getFasilitasDataTable()
     {
-        $fasilitas = Fasilitas::orderByDesc('id');
+        $fasilitas = Fasilitas::with(['kategori'])->orderByDesc('id');
 
         return DataTables::of($fasilitas)
             ->addColumn('action', function ($fasilitas) {
@@ -43,16 +43,15 @@ class FasilitasController extends Controller
             'keterangan' => 'required|string',
             'latitude' => 'required|string',
             'longitude' => 'required|string',
-            'type' => 'required|string',
+            'id_kategori' => 'nullable'
         ]);
 
         $fasilitasData = [
             'nama' => $request->input('nama'),
+            'id_kategori' => $request->input('id_kategori'),
             'keterangan' => $request->input('keterangan'),
             'latitude' => $request->input('latitude'),
             'longitude' => $request->input('longitude'),
-            'type' => $request->input('type'),
-            'harga' => $request->input('harga'),
             'slug' => Str::slug($request->input('nama')),
         ];
 
@@ -92,8 +91,6 @@ class FasilitasController extends Controller
     {
         $fasilitas = Fasilitas::find($id);
 
-        TiketItems::where('id_fasilitas', $id)->delete();
-
         if (!$fasilitas) {
             return response()->json(['message' => 'Fasilitas not found'], 404);
         }
@@ -111,7 +108,7 @@ class FasilitasController extends Controller
     }
     public function edit($id)
     {
-        $fasilitas = Fasilitas::find($id);
+        $fasilitas = Fasilitas::with('kategori')->find($id);
 
         if (!$fasilitas) {
             return response()->json(['message' => 'fasilitas not found'], 404);

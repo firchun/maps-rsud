@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fasilitas;
+use App\Models\Kategori;
 use App\Models\Setting;
 use App\Models\Tiket;
 use Illuminate\Http\Request;
@@ -10,27 +11,32 @@ use Illuminate\Support\Facades\Storage;
 
 class PageController extends Controller
 {
-    public function index()
+
+
+    public function index(Request $request)
     {
-        $fasilitas = Fasilitas::all();
+        $kategoriId = $request->get('kategori'); // optional filter
+
+        $fasilitas = Fasilitas::with('kategori')
+            ->when($kategoriId, function ($query) use ($kategoriId) {
+                $query->where('id_kategori', $kategoriId);
+            })
+            ->get();
+
+        // tambahkan photo_url untuk JS
         $fasilitas->map(function ($item) {
             $item->photo_url = Storage::url($item->foto);
             return $item;
         });
-        $data = [
-            'title' => 'Home',
-            'fasilitas' => $fasilitas,
-        ];
-        return view('pages.index', $data);
+
+        return view('pages.index', [
+            'title'      => 'Home',
+            'fasilitas'  => $fasilitas,
+            'kategoris'  => Kategori::all(),
+            'kategoriId' => $kategoriId
+        ]);
     }
-    public function about()
-    {
-        $data = [
-            'title' => 'About',
-            'about' => Setting::latest()->first(),
-        ];
-        return view('pages.about', $data);
-    }
+
     public function maps()
     {
         $fasilitas = Fasilitas::all();
@@ -44,39 +50,8 @@ class PageController extends Controller
         ];
         return view('pages.maps', $data);
     }
-    public function tiket()
-    {
-        $data = [
-            'title' => 'Check Tiket'
-        ];
-        return view('pages.tiket', $data);
-    }
-    public function search_tiket(Request $request)
-    {
-        $barcode = $request->input('barcode');
-        $tiket = Tiket::where('barcode', $barcode)->first();
-        if ($tiket) {
-            return redirect()->route('detail-tiket', ['barcode' => $tiket->barcode]);
-        } else {
-            return back()->with('error', 'Tiket tidak ditemukan')->withInput();
-        }
-    }
-    public function detail_tiket($barcode)
-    {
-        $data = [
-            'title' => 'Detail Tiket : ' . $barcode,
-            'tiket' => Tiket::where('barcode', $barcode)->first()
-        ];
-        return view('pages.detail-tiket', $data);
-    }
-    public function form()
-    {
-        $data = [
-            'title' => 'Formulir Pemesanan Tiket Wisata',
-            'setting' => Setting::latest()->first(),
-        ];
-        return view('pages.form-pemesanan', $data);
-    }
+
+
     public function fasilitas()
     {
         $data = [

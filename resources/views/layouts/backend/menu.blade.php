@@ -89,13 +89,12 @@
 </div>
 <div class="left-side-bar">
     <div class="brand-logo">
-        <a href="{{ route('home') }}">
-            <img src="{{ asset('img/logo.png') }}" alt="" class="dark-logo" />
-            <img src="{{ asset('img/logo.png') }}" alt="" class="light-logo" />
-        </a>
-        <div class="close-sidebar" data-toggle="left-sidebar-close">
-            <i class="ion-close-round"></i>
-        </div>
+        <a href="{{ route('welcome') }}" class="text-center">
+            <img src="{{ asset('img/logo.png') }}" alt="" class="dark-logo" style="height: 100%;" />
+            <img src="{{ asset('img/logo.png') }}" alt="" class="light-logo" style="height: 100%;" />
+            <div class="close-sidebar" data-toggle="left-sidebar-close">
+                <i class="ion-close-round"></i>
+            </div>
     </div>
     <div class="menu-block customscroll">
         <div class="sidebar-menu">
@@ -112,33 +111,10 @@
                         <span class="micon bi bi-layers"></span><span class="mtext">Master Data</span>
                     </a>
                     <ul class="submenu">
+                        <li><a href="{{ route('kategori') }}"
+                                class="{{ request()->is('kategori') ? 'active' : '' }}">Kategori Fasilitas</a></li>
                         <li><a href="{{ route('fasilitas') }}"
                                 class="{{ request()->is('fasilitas') ? 'active' : '' }}">Fasilitas</a></li>
-
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon bi bi-ticket"></span><span class="mtext">Tiket</span>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="{{ route('tiket') }}"
-                                class="{{ request()->is('tiket') ? 'active' : '' }}">Pemesanan Tiket</a></li>
-                        <li><a href="{{ route('update-tiket') }}"
-                                class="{{ request()->is('update-tiket') ? 'active' : '' }}">Update Tiket</a></li>
-
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon bi bi-folder"></span><span class="mtext">Laporan</span>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="{{ route('laporan.tiket') }}"
-                                class="{{ request()->is('laporan/tiket') ? 'active' : '' }}">Laporan Tiket</a></li>
-                        <li><a href="{{ route('laporan.keuangan') }}"
-                                class="{{ request()->is('laporan/keuangan') ? 'active' : '' }}">Laporan Keuangan</a>
-                        </li>
 
                     </ul>
                 </li>
@@ -151,13 +127,6 @@
                                 class="{{ request()->is('users') ? 'active' : '' }}">Pengguna</a></li>
 
                     </ul>
-                </li>
-
-                <li>
-                    <a href="{{ url('/setting') }}"
-                        class="dropdown-toggle no-arrow {{ request()->is('setting') ? 'active' : '' }}">
-                        <span class="micon bi bi-gear"></span><span class="mtext">Pengaturan</span>
-                    </a>
                 </li>
                 <li>
                     <a href="{{ url('/profile') }}"

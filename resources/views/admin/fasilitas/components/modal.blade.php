@@ -23,16 +23,14 @@
                                 <input type="text" class="form-control" id="edit-nama" name="nama" required>
                             </div>
                             <div class="mb-3">
-                                <label for="edit-type" class="form-label">Type Fasilitas</label>
-                                <select class="form-control" id="edit-type" name="type">
-                                    <option value="Gratis">Gratis</option>
-                                    <option value="Berbayar">Berbayar</option>
+                                <label for="edit-kategori" class="form-label">Pilih Kategori</label>
+                                <select id="edit-id-kategori" name="id_kategori" class="form-control">
+                                    @foreach ($kategori as $item)
+                                        <option value="{{ $item->id }}">{{ $item->kategori }}</option>
+                                    @endforeach
                                 </select>
                             </div>
-                            <div class="mb-3" id="edit-biaya-container">
-                                <label for="edit-biaya" class="form-label">Biaya Tiket Fasilitas</label>
-                                <input type="number" class="form-control" id="edit-biaya" name="harga">
-                            </div>
+
                             <div class="mb-3">
                                 <label for="edit-keterangan" class="form-label">Keterangan Fasilitas</label>
                                 <textarea class="form-control" id="edit-keterangan" name="keterangan" required></textarea>
@@ -89,15 +87,12 @@
                                 <input type="text" class="form-control" id="nama" name="nama" required>
                             </div>
                             <div class="mb-3">
-                                <label for="type" class="form-label">Type Fasilitas</label>
-                                <select class="form-control" id="type" name="type">
-                                    <option value="Gratis">Gratis</option>
-                                    <option value="Berbayar">Berbayar</option>
+                                <label for="edit-kategori" class="form-label">Pilih Kategori</label>
+                                <select id="id-kategori" name="id_kategori" class="form-control">
+                                    @foreach ($kategori as $item)
+                                        <option value="{{ $item->id }}">{{ $item->kategori }}</option>
+                                    @endforeach
                                 </select>
-                            </div>
-                            <div class="mb-3" id="biaya-container">
-                                <label for="biaya" class="form-label">Biaya Tiket Fasilitas</label>
-                                <input type="number" class="form-control" id="biaya" name="harga">
                             </div>
                             <div class="mb-3">
                                 <label for="keterangan" class="form-label">Keterangan Fasilitas</label>
@@ -135,42 +130,6 @@
 </div>
 
 @push('js')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var typeSelect = document.getElementById('type');
-            var biayaContainer = document.getElementById('biaya-container');
-            var biayaInput = document.getElementById('biaya');
-            var typeSelectEdit = document.getElementById('edit-type');
-            var biayaContainerEdit = document.getElementById('edit-biaya-container');
-            var biayaInputEdit = document.getElementById('edit-biaya');
-
-            function toggleBiayaVisibility() {
-                if (typeSelect.value === 'Berbayar') {
-                    biayaContainer.style.display = 'block';
-                    biayaInput.required = true;
-                    biayaInput.value = '1000';
-                } else {
-                    biayaContainer.style.display = 'none';
-                    biayaInput.required = false;
-                    biayaInput.value = '0';
-                }
-                if (typeSelectEdit.value === 'Berbayar') {
-                    biayaContainerEdit.style.display = 'block';
-                    biayaInputEdit.required = true;
-                    biayaInputEdit.value = '1000';
-                } else {
-                    biayaContainerEdit.style.display = 'none';
-                    biayaInputEdit.required = false;
-                    biayaInputEdit.value = '0';
-                }
-            }
-
-            toggleBiayaVisibility();
-            typeSelect.addEventListener('change', toggleBiayaVisibility);
-            typeSelectEdit.addEventListener('change', toggleBiayaVisibility);
-        });
-    </script>
-
     <!-- Leaflet CSS and JS -->
     <link rel="stylesheet" href="https://downtowncarypark.com/wp-content/themes/nmc_carypark/assets/leaflet.css">
     <script src="https://downtowncarypark.com/wp-content/themes/nmc_carypark/assets/leaflet.min.js"></script>
@@ -213,7 +172,7 @@
                 [1000, 1000]
             ];
             var image = L.imageOverlay(
-                '{{ asset('img/map-wisata-lotus.jpg') }}',
+                '{{ asset('img/maps.jpg') }}',
                 bounds
             ).addTo(map);
 
@@ -258,7 +217,7 @@
                 [1000, 1000]
             ];
             var image = L.imageOverlay(
-                '{{ asset('img/map-wisata-lotus.jpg') }}',
+                '{{ asset('img/maps.jpg') }}',
                 bounds
             ).addTo(map);
 

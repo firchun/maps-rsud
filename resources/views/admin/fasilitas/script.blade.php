@@ -19,15 +19,11 @@
                         data: 'nama',
                         name: 'nama'
                     },
+                    {
+                        data: 'kategori.kategori',
+                        name: 'kategori'
+                    },
 
-                    {
-                        data: 'type',
-                        name: 'type'
-                    },
-                    {
-                        data: 'harga',
-                        name: 'harga'
-                    },
                     {
                         data: 'action',
                         name: 'action'
@@ -47,9 +43,8 @@
                     success: function(response) {
                         $('#edit-id').val(response.id);
                         $('#edit-nama').val(response.nama);
+                        $('#edit-id-kategori').val(response.kategori.kategori);
                         $('#edit-keterangan').val(response.keterangan);
-                        $('#edit-type').val(response.type);
-                        $('#edit-biaya').val(response.biaya);
                         $('#edit-latitude').val(response.latitude);
                         $('#edit-longitude').val(response.longitude);
                         if (response.photo_url) {

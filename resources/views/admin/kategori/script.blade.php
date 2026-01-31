@@ -3,31 +3,23 @@
         $(function() {
             $('#datatable-customers').DataTable({
                 processing: true,
-                serverSide: true,
-                responsive: true,
-                ajax: '{{ url('customers-datatable') }}',
+                serverSide: false,
+                responsive: false,
+                ajax: '{{ url('kategori-datatable') }}',
                 columns: [{
                         data: 'id',
                         name: 'id'
                     },
 
                     {
-                        data: 'name',
-                        name: 'name'
-                    },
-                    {
-                        data: 'phone',
-                        name: 'phone'
-                    },
-
-                    {
-                        data: 'address',
-                        name: 'address'
+                        data: 'kategori',
+                        name: 'kategori'
                     },
                     {
                         data: 'action',
                         name: 'action'
-                    }
+                    },
+
                 ]
             });
             $('.create-new').click(function() {
@@ -39,13 +31,11 @@
             window.editCustomer = function(id) {
                 $.ajax({
                     type: 'GET',
-                    url: '/customers/edit/' + id,
+                    url: '/kategori/edit/' + id,
                     success: function(response) {
-                        $('#customersModalLabel').text('Edit Customer');
-                        $('#formCustomerId').val(response.id);
-                        $('#formCustomerName').val(response.name);
-                        $('#formCustomerPhone').val(response.phone);
-                        $('#formCustomerAddress').val(response.address);
+                        $('#edit-id').val(response.id);
+                        $('#edit-kategori').val(response.kategori);
+
                         $('#customersModal').modal('show');
                     },
                     error: function(xhr) {
@@ -58,7 +48,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: '/customers/store',
+                    url: '/kategori/store',
                     data: formData,
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -75,19 +65,19 @@
                 });
             });
             $('#createCustomerBtn').click(function() {
-                var formData = $('#createUserForm').serialize();
+                var formData = new FormData($('#createUserForm')[0]);
 
                 $.ajax({
                     type: 'POST',
-                    url: '/customers/store',
+                    url: '/kategori/store',
                     data: formData,
+                    processData: false, // Prevent jQuery from automatically transforming the data into a query string
+                    contentType: false, // Prevent jQuery from setting content-type header
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function(response) {
                         alert(response.message);
-                        $('#customersModalLabel').text('Edit Customer');
-                        $('#formCustomerName').val('');
                         $('#datatable-customers').DataTable().ajax.reload();
                         $('#create').modal('hide');
                     },
@@ -96,11 +86,34 @@
                     }
                 });
             });
+            $('#updateFacilityBtn').click(function() {
+                var formData = new FormData($('#editUserForm')[0]);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/kategori/store',
+                    data: formData,
+                    processData: false, // Prevent jQuery from automatically transforming the data into a query string
+                    contentType: false, // Prevent jQuery from setting content-type header
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        alert(response.message);
+                        $('#datatable-customers').DataTable().ajax.reload();
+                        $('#customersModal').modal('hide');
+                    },
+                    error: function(xhr) {
+                        alert('Terjadi kesalahan: ' + xhr.responseText);
+                    }
+                });
+            });
+
             window.deleteCustomers = function(id) {
-                if (confirm('Apakah Anda yakin ingin menghapus pelanggan ini?')) {
+                if (confirm('Apakah Anda yakin ingin menghapus fasilitas ini?')) {
                     $.ajax({
                         type: 'DELETE',
-                        url: '/customers/delete/' + id,
+                        url: '/kategori/delete/' + id,
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },

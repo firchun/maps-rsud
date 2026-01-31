@@ -69,14 +69,13 @@
                     <ul class="navbar-nav mx-auto mt-3 mt-lg-0">
                         <li class="nav-item"> <a class="nav-link" href="{{ url('/') }}">Home</a>
                         </li>
-                        <li class="nav-item"> <a class="nav-link" href="{{ url('/maps') }}">Maps</a>
-                        </li>
-                        <li class="nav-item"> <a class="nav-link" href="{{ url('/about') }}">About</a>
-                        </li>
-                        <li class="nav-item"> <a class="nav-link" href="{{ url('/form-pemesanan') }}">Pesan Tiket</a>
-                        </li>
-                        <li class="nav-item"> <a class="nav-link" href="{{ url('/check-tiket') }}">Cek Tiket</a>
-                        </li>
+                        @guest
+                            <li class="nav-item"> <a class="nav-link" href="{{ url('/login') }}">Login</a>
+                            </li>
+                        @else
+                            <li class="nav-item"> <a class="nav-link" href="{{ url('/home') }}">Dashboard</a>
+                            </li>
+                        @endguest
                     </ul>
                 </div>
             </nav>
@@ -88,31 +87,9 @@
     </main>
 
     <footer class="bg-dark mt-5">
-        <div class="container section">
-            <div class="row">
-                <div class="col-lg-10 mx-auto text-center">
-                    <a class="d-inline-block mb-4 pb-2" href="{{ url('/') }}">
-                        <img loading="prelaod" decoding="async" class="img-fluid" src="{{ asset('img/logo.png') }}"
-                            alt="Reporter Hugo" style="height:100px;">
-                    </a>
-                    <ul class="p-0 d-flex navbar-footer mb-0 list-unstyled">
-                        <li class="nav-item my-0"> <a class="nav-link" href="{{ url('/') }}">Home</a></li>
-                        <li class="nav-item my-0"> <a class="nav-link" href="{{ url('/maps') }}">Maps</a></li>
-                        <li class="nav-item my-0"> <a class="nav-link" href="{{ url('/about') }}">About</a>
-                        </li>
-                        <li class="nav-item my-0"> <a class="nav-link" href="{{ url('/check-tiket') }}">Check TIket</a>
-                        </li>
-                        @guest
-                            <li class="nav-item my-0"> <a class="nav-link" href="{{ route('login') }}">Login</a></li>
-                        @else
-                            <li class="nav-item my-0"> <a class="nav-link" href="{{ route('home') }}">Dashboard</a></li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="copyright bg-dark content">Designed &amp; Developed By <a
-                href="{{ url('/') }}">{{ env('APP_NAME') }}</a></div>
+
+        <div class="copyright bg-dark content">Designed &amp; Developed By <a href="{{ url('/') }}">IT RSUD
+                MERAUKE</a></div>
     </footer>
 
 

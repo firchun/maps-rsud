@@ -2,59 +2,26 @@
 
 @section('content')
     <section class="section">
+        <form method="GET" class="mb-4 d-flex justify-content-center">
+            <select name="kategori" class="form-select w-auto" onchange="this.form.submit()">
+                <option value="">Semua Kategori</option>
+                @foreach ($kategoris as $kat)
+                    <option value="{{ $kat->id }}" {{ $kategoriId == $kat->id ? 'selected' : '' }}>
+                        {{ $kat->kategori }}
+                    </option>
+                @endforeach
+            </select>
+        </form>
         <div class="container">
-            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="{{ asset('img/slider/slide-1.jpg') }}" class="d-block w-100" alt="..."
-                            style="height: 500px; object-fit:cover;">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{{ asset('img/slider/slide-2.jpg') }}" class="d-block w-100" alt="..."
-                            style="height: 500px; object-fit:cover;">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{{ asset('img/slider/slide-3.jpg') }}" class="d-block w-100" alt="..."
-                            style="height: 500px; object-fit:cover;">
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-target="#carouselExampleControls"
-                    data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-target="#carouselExampleControls"
-                    data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </button>
-            </div>
+            <h3 class="text-center mb-3">Peta RSUD MERAUKE</h3>
+            <div id="map" style="height: 700px;border-radius:20px;" class="border border-success"></div>
         </div>
     </section>
     <section class="section">
         <div class="container">
-            <div class="jumbotron">
-                <h1 class="display-4">Selamat Datang di Taman Wisata Lotus Garden</h1>
-                <p class="lead">Rasakan keindahan alam dan kedamaian di Lotus Garden, tempat ideal untuk berlibur bersama
-                    keluarga dan teman. Temukan keajaiban flora, nikmati suasana yang menenangkan, dan buat kenangan yang
-                    tak terlupakan.</p>
-                <hr class="my-4">
-                <a class="btn btn-primary btn-lg" href="{{ url('/form-pemesanan') }}" role="button">Pesan Tiket</a>
-                <a class="btn btn-warning btn-lg" href="{{ url('/check-tiket') }}" role="button">Cek Tiket</a>
-            </div>
-        </div>
-    </section>
-    <section class="section">
-        <div class="container">
-            <h3 class="text-center mb-3">Peta Taman Wisata</h3>
-            <div id="map" style="height: 550px;border-radius:20px;" class="border border-success"></div>
-        </div>
-    </section>
-    <section class="section">
-        <div class="container">
-            <h3 class="text-center">Fasilitas Unggulan</h3>
+            <h3 class="text-center">Fasilitas</h3>
             <div class="row justify-content-center align-items-center">
-                @foreach (App\Models\Fasilitas::limit(6)->latest()->get() as $item)
+                @foreach ($fasilitas->take(6) as $item)
                     <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
                         <div class="card text-center" style="width: 18rem;">
                             <img src="{{ Storage::url($item->foto) }}" class="card-img-top" alt="{{ $item->nama }}"
@@ -70,7 +37,7 @@
                 @endforeach
             </div>
             <div class="my-3 d-flex justify-content-center">
-                <a href="{{ Url('/semua-fasilitas') }}" class="btn btn-primary">Lihat Semua Fasilitas Wisata</a>
+                <a href="{{ Url('/semua-fasilitas') }}" class="btn btn-primary">Lihat Semua Fasilitas</a>
             </div>
         </div>
     </section>
@@ -116,7 +83,7 @@
                 [1000, 1000]
             ];
             var image = L.imageOverlay(
-                '{{ asset('img/map-wisata-lotus.jpg') }}',
+                '{{ asset('img/maps.jpg') }}',
                 bounds
             ).addTo(map);
 

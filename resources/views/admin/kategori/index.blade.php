@@ -29,26 +29,25 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Name</th>
-                            <th>Phone</th>
-                            <th>Address</th>
+                            <th>Kategori</th>
                             <th>Action</th>
+
                         </tr>
                     </thead>
 
                     <tfoot>
                         <tr>
                             <th>ID</th>
-                            <th>Name</th>
-                            <th>Phone</th>
-                            <th>Address</th>
+
+                            <th>Kategori</th>
                             <th>Action</th>
+
                         </tr>
                     </tfoot>
                 </table>
             </div>
         </div>
     </div>
-    @include('admin.customers.components.modal')
+    @include('admin.kategori.components.modal')
 @endsection
-@include('admin.customers.script')
+@include('admin.kategori.script')

@@ -15,14 +15,12 @@ return new class extends Migration
     {
         Schema::create('fasilitas', function (Blueprint $table) {
             $table->id();
-            $table->string('foto');
+            $table->string('foto')->nullable();
             $table->string('nama');
             $table->string('slug');
             $table->text('keterangan');
             $table->string('latitude');
             $table->string('longitude');
-            $table->enum('type', ['Berbayar', 'Gratis']);
-            $table->string('harga')->nullable();
             $table->timestamps();
         });
     }

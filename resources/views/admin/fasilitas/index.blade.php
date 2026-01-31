@@ -31,8 +31,7 @@
                             <th>ID</th>
                             <th>Foto</th>
                             <th>Nama</th>
-                            <th>Type</th>
-                            <th>Harga</th>
+                            <th>Kategori</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -42,8 +41,7 @@
                             <th>ID</th>
                             <th>Foto</th>
                             <th>Nama</th>
-                            <th>Type</th>
-                            <th>Harga</th>
+                            <th>Kategori</th>
                             <th>Action</th>
                         </tr>
                     </tfoot>

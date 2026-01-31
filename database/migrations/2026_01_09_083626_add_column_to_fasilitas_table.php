@@ -13,8 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('tiket', function (Blueprint $table) {
-            $table->string('barcode')->after('id')->unique();
+        Schema::table('fasilitas', function (Blueprint $table) {
+            $table->foreignId('id_kategori')
+                ->nullable()
+                ->after('id')
+                ->constrained('kategoris')
+                ->nullOnDelete();
         });
     }
 
@@ -25,7 +29,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('tiket', function (Blueprint $table) {
+        Schema::table('fasilitas', function (Blueprint $table) {
             //
         });
     }

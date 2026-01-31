@@ -78,7 +78,7 @@
                 [1000, 1000]
             ];
             var image = L.imageOverlay(
-                '{{ asset('img/map-wisata-lotus.jpg') }}',
+                '{{ asset('img/maps.jpg') }}',
                 bounds
             ).addTo(map);
 
