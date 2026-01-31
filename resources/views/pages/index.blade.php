@@ -115,22 +115,28 @@
 
             // Add markers to the map
             facilities.forEach(function(facility) {
-                // Directly use pixel coordinates from the facilities data
                 var markerCoords = L.latLng(facility.latitude, facility.longitude);
 
-                // Create popup content with photo
-                var popupContent = '<h4 class="m-0">' + facility.nama + '</h4><br>' +
+                // siapkan bagian gambar (opsional)
+                var imageHtml = '';
+                if (facility.photo_url && facility.photo_url !== '') {
+                    imageHtml =
+                        '<img src="' + facility.photo_url + '" alt="' + facility.nama +
+                        '" style="max-width: 300px; height: auto;"/><br><br>';
+                }
 
-                    '<img src="' + facility.photo_url + '" alt="' + facility.nama +
-                    '" style="width: 2000px; height: auto;"/>' +
-                    '<br><br><a class="btn btn-success p-1 text-white rounded" href="' +
-                    '{{ url('/detail-fasilitas') }}/' + facility.slug + '" >Lihat Selengkapnya<a>';
+                var popupContent =
+                    '<h4 class="m-0">' + facility.nama + '</h4><br>' +
+                    imageHtml +
+                    '<a class="btn btn-success p-1 text-white rounded" href="' +
+                    '{{ url('/detail-fasilitas') }}/' + facility.slug +
+                    '">Lihat Selengkapnya</a>';
 
                 L.marker(markerCoords, {
                         title: facility.nama
-                    }).addTo(map)
+                    })
+                    .addTo(map)
                     .bindPopup(popupContent);
-
             });
         });
     </script>
