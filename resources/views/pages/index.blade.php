@@ -117,20 +117,25 @@
             facilities.forEach(function(facility) {
                 var markerCoords = L.latLng(facility.latitude, facility.longitude);
 
-                // siapkan bagian gambar (opsional)
                 var imageHtml = '';
-                if (facility.photo_url && facility.photo_url !== '') {
+
+                // tampilkan gambar hanya jika ada path file setelah /storage/
+                if (
+                    facility.photo_url &&
+                    facility.photo_url !== '' &&
+                    facility.photo_url !== '/storage/' &&
+                    facility.photo_url.split('/').pop() !== ''
+                ) {
                     imageHtml =
                         '<img src="' + facility.photo_url + '" alt="' + facility.nama +
-                        '" style="max-width: 300px; height: auto;"/><br><br>';
+                        '" style="max-width:300px;height:auto;" onerror="this.remove();"><br><br>';
                 }
 
                 var popupContent =
                     '<h4 class="m-0">' + facility.nama + '</h4><br>' +
                     imageHtml +
-                    '<a class="btn btn-success p-1 text-white rounded" href="' +
-                    '{{ url('/detail-fasilitas') }}/' + facility.slug +
-                    '">Lihat Selengkapnya</a>';
+                    '<a class="btn btn-success p-1 text-white rounded" href="/detail-fasilitas/' +
+                    facility.slug + '">Lihat Selengkapnya</a>';
 
                 L.marker(markerCoords, {
                         title: facility.nama
